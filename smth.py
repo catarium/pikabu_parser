@@ -33,7 +33,7 @@ cur = con.cursor()
 # con.commit()
 
 
-UPLOAD_FOLDER = '/static/images'
+UPLOAD_FOLDER = 'static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 # cur.execute('''CREATE TABLE comments (
