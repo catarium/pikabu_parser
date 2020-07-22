@@ -23,6 +23,8 @@ app.config.from_object(Config)
 cur = con.cursor()
 
 
+# cur.execute('ALTER TABLE posts ADD COLUMN postname text;')
+# con.commit()
 # cur.execute("DROP TABLE comments")
 # cur.execute('''CREATE TABLE comments (
 # id SERIAL,
