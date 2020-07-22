@@ -9,17 +9,20 @@
 <body>
 <header><h1><a class="header" href="{{ url_for('home') }}">BestPost</a></h1></header>
     <div class="post">
-        <div class="post-header"><a class="a" href="{{ url_for('user_profile', username=user)}}">{{user}}</a></div>
+        <div class="post-header">
+            {{ postname }}
+            <a class="a" href="{{ url_for('user_profile', username=user)}}">{{user}}</a>
+        </div>
         <p>{{ post }}</p>
         {% if image != ' ' %}
-        <img src="{{ url_for('static', filename='images/' + image) }}">
+        <img class="post-image" src="{{ url_for('static', filename='images/' + image) }}">
         {% endif %}
     </div>
-    <form class="create-comment" action='' method="POST" enctype="multipart/form-data" novalidate>
-        <textarea type='text' class='comment-area-name' name="comment-name" placeholder="Оставьте комментарий"></textarea>
-        <textarea type='text' class='comment-area-content' name="comment"></textarea>
-        <input class='input' value='Оставить комментарий' type="submit">
-    </form>
+<!--    <form class="create-comment" action='' method="POST" enctype="multipart/form-data" novalidate>-->
+<!--        <textarea type='text' class='comment-area-name' name="comment-name" placeholder="Оставьте комментарий"></textarea>-->
+<!--        <textarea type='text' class='comment-area-content' name="comment"></textarea>-->
+<!--        <input class='input' value='Оставить комментарий' type="submit">-->
+<!--    </form>-->
     <div class="panel panel-default widget">
             <div class="panel-heading">
                 <span class="glyphicon glyphicon-comment"></span>
@@ -27,6 +30,11 @@
                     Recent Comments</h3>
                 <span class="label label-info">
                     </span>
+     <form class="create-comment" action='' method="POST" enctype="multipart/form-data" novalidate>
+        <textarea class='comment-area-name' name="comment-name" placeholder="Оставьте комментарий"></textarea>
+        <textarea class='comment-area-content' name="comment"></textarea>
+        <input class='input' value='Оставить комментарий' type="submit">
+    </form>
             </div>
             {% for i in range(coms_lenth) %}
             <div class="panel-body">

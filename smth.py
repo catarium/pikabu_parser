@@ -147,24 +147,24 @@ def allowed_file(filename):
 def create_post():
     if request.method == "POST":
         try:
-            text = request.form['text']
+            text = request.form['post']
+            post_name = request.form['post-name']
             file = request.files['file']
         except KeyError:
+            print('key error')
             file = 'default_avatar.jpg'
         print(request.files)
-        if file and allowed_file(file.filename):
+        if file and allowed_file(file.filename) and post_name:
             cur.execute('SELECT id FROM users ORDER BY id DESC LIMIT 1')
             filename = str(cur.fetchall()[0][0]) + secure_filename(file.filename)
             print(filename)
             file.save(os.path.join(UPLOAD_FOLDER, filename))
-            resize_image(input_image_path='static/images/' + filename,
-                         output_image_path='static/images/' + filename, basewidth=300)
-            command = "INSERT INTO posts (post, username, image) VALUES(%s, %s, %s);"
-            cur.execute(command, (text, session['user'], filename))
+            command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
+            cur.execute(command, (post_name, text, session['user'], filename))
             con.commit()
         else:
-            command = "INSERT INTO posts (post, username, image) VALUES(%s, %s, %s);"
-            cur.execute(command, (text, session['user'], ' '))
+            command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
+            cur.execute(command, (post_name, text, session['user'], ' '))
             con.commit()
         return redirect(url_for('home'))
     else:
@@ -176,17 +176,18 @@ def create_post():
 @app.route('/our_posts')
 def our_posts():
     if 'user' in session:
-        cur.execute('SELECT id, username, post, image FROM posts;')
+        cur.execute('SELECT id, username, postname, post, image FROM posts;')
         data = cur.fetchall()
         print(data)
         ids = [str(i[0]) for i in data]
-        posts = [i[2] for i in data]
+        posts = [i[3] for i in data]
         users = [i[1] for i in data]
-        images = [i[3] for i in data]
+        images = [i[4] for i in data]
+        post_names = [i[2] for i in data]
         print(posts)
         print(users)
         return render_template('our_posts.html', posts=posts, posts_len=len(posts),
-                               users=users, images=images, ids=ids)
+                               users=users, images=images, ids=ids, post_names=post_names)
     else:
         return redirect(url_for('login'))
 
@@ -224,15 +225,18 @@ def verification():
 def user_profile(username):
     cur.execute('SELECT username FROM users WHERE username = %s and verified = true', (username,))
     if cur.fetchall():
-        cur.execute('SELECT post, image FROM posts WHERE username = %s', (username,))
+        cur.execute('SELECT post, image, postname, id FROM posts WHERE username = %s', (username,))
         data = cur.fetchall()
         posts = [i[0] for i in data]
         images = [i[1] for i in data]
+        post_names = [i[2] for i in data]
+        ids = [i[3] for i in data]
         cur.execute('SELECT avatar FROM users WHERE username = %s', (username,))
         avatar = cur.fetchall()[0][0]
         print(avatar)
         return render_template('profile.html', user=username, posts=posts, posts_len=len(posts),
-                               avatar=avatar, images=images, session=session)
+                               avatar=avatar, images=images, session=session,
+                               post_names=post_names, ids=ids)
     else:
         return '<h1>Такого пользователя не существует</h1>'
 
@@ -328,9 +332,9 @@ def post(postid):
         print('aaaa')
         if 'user' in session:
             postid = str(postid)
-            cur.execute('SELECT post, username, image FROM posts WHERE id = %s', (postid,))
+            cur.execute('SELECT post, username, image, postname, id FROM posts WHERE id = %s', (postid,))
             data = cur.fetchall()[0]
-            post, user, image = data
+            post, user, image, postname, id_ = data
             cur.execute('SELECT username, comment_name, comment FROM comments WHERE postid = %s', (postid,))
             data = cur.fetchall()
             comm_users = [i[0] for i in data]
@@ -338,7 +342,8 @@ def post(postid):
             comments = [i[2] for i in data]
             return render_template('post.html', post=post, user=user, image=image,
                                    comm_users=comm_users, comments=comments,
-                                   coms_lenth=len(comments), comment_name=comment_name)
+                                   coms_lenth=len(comments), comment_name=comment_name,
+                                   postname=postname, id=id_)
         return redirect((url_for('login')))
 
 

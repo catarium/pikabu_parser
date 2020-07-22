@@ -84,3 +84,16 @@ a:hover {
     grid-area: titleArea;
     text-align: center;
 }
+
+.post-image {
+    max-width: 300px;
+}
+
+.post_header {
+    justify-content: space-between;
+    display: flex;
+}
+
+.post-name {
+    font-size: 20px;
+}

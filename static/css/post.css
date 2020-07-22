@@ -34,6 +34,7 @@ a {
 }
 
 .list-group-item {
+    margin: 20px;
     background-color:#d7a8ed;
 }
 
@@ -68,10 +69,14 @@ a {
     text-decoration: none;
     border: none;
     height: 40px;
-    width: 155px;
+    width: 200px;
 }
 
 .row {
     display: flex;
     flex-direction: column;
+}
+
+.post-image {
+    max-width: 300px;
 }

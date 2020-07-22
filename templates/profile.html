@@ -34,11 +34,11 @@
             {% for j in range(posts_len) %}
             <div class="post">
                 <div class="post_header">
-                {{j + 1}}
+                <a class="post-name" href="{{ url_for('post', postid=ids[j])}}">{{post_names[j]}}</a>
                 </div>
                 <p>{{posts[j]}}</p>
                 {% if images[j] != ' ' %}
-                <img src="{{ url_for('static', filename='images/' + images[j]) }}">
+                <img class="post-image" src="{{ url_for('static', filename='images/' + images[j]) }}">
                 {% endif %}
             </div>
             {% endfor %}
