@@ -25,35 +25,6 @@ con.set_session(autocommit=True)
 app.config.from_object(Config)
 cur = con.cursor()
 
-cur.execute('''CREATE TABLE comments (
-id SERIAL,
-username TEXT,
-comment_name TEXT,
-comment TEXT,
-postid INTEGER
-);''')
-con.commit()
-
-cur.execute('''CREATE TABLE users (
-id SERIAL,
-username VARCHAR(30),
-password TEXT,
-email VARCHAR(100),
-verified BOOL,
-code VARCHAR(10),
-avatar TEXT
-);''')
-con.commit()
-
-cur.execute('''CREATE TABLE posts (
-id SERIAL,
-username TEXT,
-post TEXT,
-image TEXT,
-postname TEXT
-);''')
-con.commit()
-
 #
 # command = f"INSERT INTO users (username, password, email) " \
 #           f"VALUES('test', '{generate_password_hash('test')}', 'test')"
@@ -396,5 +367,5 @@ def post(postid):
         return redirect((url_for('login')))
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
