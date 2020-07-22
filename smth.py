@@ -33,37 +33,37 @@ cur = con.cursor()
 # con.commit()
 
 
-UPLOAD_FOLDER = 'C:/Users/user/PycharmProjects/pikabu_parser/static/images'
+UPLOAD_FOLDER = '/static/images'
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
-cur.execute('''CREATE TABLE comments (
-id SERIAL,
-username TEXT,
-comment_name TEXT,
-comment TEXT,
-postid INTEGER
-);''')
-con.commit()
-
-cur.execute('''CREATE TABLE users (
-id SERIAL,
-username VARCHAR(30),
-password TEXT,
-email VARCHAR(100),
-verified BOOL,
-code VARCHAR(10),
-avatar TEXT
-);''')
-con.commit()
-
-cur.execute('''CREATE TABLE posts (
-id SERIAL,
-username TEXT,
-post TEXT,
-image TEXT,
-postname TEXT
-);''')
-con.commit()
+# cur.execute('''CREATE TABLE comments (
+# id SERIAL,
+# username TEXT,
+# comment_name TEXT,
+# comment TEXT,
+# postid INTEGER
+# );''')
+# con.commit()
+#
+# cur.execute('''CREATE TABLE users (
+# id SERIAL,
+# username VARCHAR(30),
+# password TEXT,
+# email VARCHAR(100),
+# verified BOOL,
+# code VARCHAR(10),
+# avatar TEXT
+# );''')
+# con.commit()
+#
+# cur.execute('''CREATE TABLE posts (
+# id SERIAL,
+# username TEXT,
+# post TEXT,
+# image TEXT,
+# postname TEXT
+# );''')
+# con.commit()
 
 
 @app.route('/')
@@ -367,5 +367,5 @@ def post(postid):
         return redirect((url_for('login')))
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
