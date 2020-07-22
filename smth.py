@@ -24,17 +24,7 @@ app.config.from_object(Config)
 cur = con.cursor()
 
 
-# cur.execute('ALTER TABLE posts ADD COLUMN postname text;')
-# con.commit()
-# cur.execute("DROP TABLE comments")
-# cur.execute('''CREATE TABLE comments (
-# id SERIAL,
-# username TEXT,
-# comment_name TEXT,
-# comment TEXT,
-# postid INTEGER
-# );''')
-# con.commit()
+
 #
 # command = f"INSERT INTO users (username, password, email) " \
 #           f"VALUES('test', '{generate_password_hash('test')}', 'test')"
