@@ -9,6 +9,7 @@ from send_mail import send_message
 from random import sample
 from werkzeug.utils import secure_filename
 from web_forms import RegForm
+from sqlalchemy import create_engine
 from resize_image import resize_image
 import os
 
@@ -17,7 +18,7 @@ app = Flask(__name__, template_folder='templates')
 app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdTCbQZAAAAAOSVAPFO_ZfzX9i0qTS4Iub8R3Ru'
 app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdTCbQZAAAAAHx_AZL_TND4HDGMPzdtn5_vNPTj'
 
-con = psycopg2.connect(host='localhost', user='postgres', password='MY_parol', dbname='posts')
+con = create_engine("DATABASE_URL")
 con.set_session(autocommit=True)
 app.config.from_object(Config)
 cur = con.cursor()
