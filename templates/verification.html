@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}?v1">
+</head>
+<body>
+<div class="login">
+    {% block content %}
+    <h1>Sign In</h1>
+    <form action="" method="post">
+        <p>
+            <p>
+                <label for="code">Verification</label><br>
+                <input id="ver" name="ver" required size="32" type="text" value=""><br>
+
+            </p>
+            <p><input id="submit" name="submit" type="submit" value="enter code"></p>
+    </form>
+{% endblock %}
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BestPost - edit profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}?v1">
+</head>
+<body>
+    {% block content %}
+    
+    <div class="login">
+     <form action='' method="POST" enctype="multipart/form-data" novalidate>
+        <h1>Edit profile</h1>
+        <p>
+            <p>
+                <label for="username">Username</label><br>
+                <input id="username" name="username" required size="32" type="text" value=""><br>
+
+            </p>
+            <p>
+                <label for="password">Password</label><br>
+                <input id="password" name="password" required size="32" type="password" value=""><br>
+
+            </p>
+            <p>
+                <label for="email">Email</label><br>
+                <input id="email" name="email" required size="32" type="text" value=""><br>
+                <input class="upload" type='file' name='file'>
+            </p>
+            <p><input id="submit" name="submit" type="submit" value="edit"></p>
+         {% endblock %}
+    </form>
+    </div>
+</body>
+</html>

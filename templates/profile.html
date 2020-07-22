@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/our_posts.css') }}?v1">
+</head>
+<body>
+<header>
+    <div class="header">
+        {% if avatar %}
+            <img class="avatar" src="{{ url_for('static', filename='images/' + avatar) }}" width="200px">
+            <h1 class="username">{{ user }}</h1>
+            {% if 'user' in session and session['user'] == user %}
+            <a class="edit" href="{{url_for('edit_profile', username=user)}}">Настроить</a>
+            {% endif %}
+            {% else %}
+            <h1>{{ user }}</h1>
+            {% if 'user' in session and session['user'] == user %}
+            <a class="edit" href="{{url_for('edit_profile', username=user)}}">Настроить</a>
+            {% endif %}
+            {% endif %}
+    </div>
+    {% if 'user' in session and session['user'] == user %}
+        <a class="create" href="{{url_for('create_post')}}">Создать пост</a>
+    {% endif %}
+
+
+</header>
+
+<div class="grid-container">
+        <h2 class="title">{{ 'Посты ' + user }}</h2>
+        <div class="postWall">
+            {% for j in range(posts_len) %}
+            <div class="post">
+                <div class="post_header">
+                {{j + 1}}
+                </div>
+                <p>{{posts[j]}}</p>
+                {% if images[j] != ' ' %}
+                <img src="{{ url_for('static', filename='images/' + images[j]) }}">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</body>
+</html>

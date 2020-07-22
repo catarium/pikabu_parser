@@ -1,0 +1,50 @@
+body {
+    font-family: sans-serif;
+    background-image: url("https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png");
+    background-size: cover;
+    color: #fafafa;
+}
+
+header {
+    display: flex;
+    align-content: center;
+    justify-content: space-between;
+    margin: 3rem;
+    text-align: center;
+}
+
+
+.name {
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.log-reg-btn {
+    color: #fafafa;
+    border-radius: 1.5rem;
+    background: #e85d04;
+    text-decoration: none;
+    padding: 1.2rem;
+}
+
+.a {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn {
+    margin: 20rem;
+    opacity: 1;
+    font-size: 200%;
+    color: #fafafa;
+    /* margin: 16rem; */
+    background: #e85d04;
+    text-decoration: none;
+    padding: 3rem;
+}
+
+a:hover {
+    transform: scale(1.1);
+    background-color: rosybrown;
+}

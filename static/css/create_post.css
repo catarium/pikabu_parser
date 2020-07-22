@@ -1,0 +1,43 @@
+body {
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    flex-direction: column;
+    font-family: sans-serif;
+    background-image: url("https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png");
+    background-size: cover;
+    color: whitesmoke;
+    background-repeat: no-repeat;
+}
+
+header {
+    text-align: center;
+    font-size: 1.5;
+}
+
+.post {
+    margin-left: 2rem;
+    padding: 1.2rem;
+    border-radius: 1.8rem;
+    font-family: sans-serif;
+    margin-bottom: 15px;
+   /* border-radius: 2rem; */
+}
+
+.create-post {
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+}
+
+.upload {
+    margin-left: 40px;
+}
+
+.input {
+    height: 2rem;
+    border-radius: 0rem;
+    margin-left: 28rem;
+}

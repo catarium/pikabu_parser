@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/create_post.css') }}?v1">
+    <title>Document</title>
+</head>
+<body>
+    <header><h1>Создать пост</h1></header>
+    <main>
+        <form class="create-post" action='' method="POST" enctype="multipart/form-data" novalidate>
+            <textarea type='text' class='post' name="text" cols="60" rows="20"></textarea>
+            <input class="upload" type='file' name='file'>
+            <input class='input' value='запостить' type="submit">
+        </form>
+    </main>
+</body>
+</html>

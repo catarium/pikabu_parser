@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/post.css') }}?v1">
+</head>
+<body>
+<header><h1><a class="header" href="{{ url_for('home') }}">BestPost</a></h1></header>
+    <div class="post">
+        <div class="post-header"><a class="a" href="{{ url_for('user_profile', username=user)}}">{{user}}</a></div>
+        <p>{{ post }}</p>
+        {% if image != ' ' %}
+        <img src="{{ url_for('static', filename='images/' + image) }}">
+        {% endif %}
+    </div>
+    <form class="create-comment" action='' method="POST" enctype="multipart/form-data" novalidate>
+        <textarea type='text' class='comment-area-name' name="comment-name" placeholder="Оставьте комментарий"></textarea>
+        <textarea type='text' class='comment-area-content' name="comment"></textarea>
+        <input class='input' value='Оставить комментарий' type="submit">
+    </form>
+    <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-comment"></span>
+                <h3 class="panel-title">
+                    Recent Comments</h3>
+                <span class="label label-info">
+                    </span>
+            </div>
+            {% for i in range(coms_lenth) %}
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+<!--                            <div class="col-xs-2 col-md-1">-->
+<!--                                <img src="http://placehold.it/80" class="img-circle img-responsive" alt="" /></div>-->
+<!--                            <div class="col-xs-10 col-md-11">-->
+                                <div>
+                                    <div class="mic-info">
+                                        By: <a href="{{ url_for('user_profile', username=comm_users[i])}}">{{ comm_users[i] }}</a>
+                                    </div>
+                                    {{ comment_name[i] }}
+                                </div>
+                                <div class="comment-text">
+                                    {{ comments[i] }}
+                                </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        {% endfor %}
+<!--    <div class="comment">-->
+<!--        {% for i in range(coms_lenth) %}-->
+<!--        <div class="comment_header">-->
+<!--            {{ comm_users[i] }}-->
+<!--            {{ comment_name[i] }}-->
+<!--        </div>-->
+<!--        <div class="comment_content">-->
+<!--            {{ comments[i] }}-->
+<!--        </div>-->
+<!--        {% endfor %}-->
+
+<!--    </div>-->
+</body>
+</html>

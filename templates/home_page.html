@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Истории из жизниt</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home_page.css') }}?v1">
+</head>
+<body>
+    <header>
+        <div class="name">Истории из пикабу и от наших пользователей</div>
+        {% if 'user' in session %}
+        <div class="btns">
+            <a href="{{url_for('logout')}}" class="log-reg-btn">Выйти</a>
+            <a href="{{url_for('user_profile', username=session['user'])}}" class="log-reg-btn">Профиль</a>
+        </div>
+        {% else %}
+        <div class="btns">
+            <a href="{{url_for('register')}}" class="log-reg-btn" >Регистрация</a>
+            <a href="{{url_for('login')}}" class="log-reg-btn">Вход</a>
+        </div>
+        {% endif %}
+    </header>
+    <main>
+        <div class="a">
+            <a class="btn" href="{{url_for('pikabu')}}">Из пикабу</a>
+            <a class="btn" href="{{url_for('our_posts')}}"> От пользователей</a>
+        </div>
+    </main>
+</body>
+</html>

@@ -1,0 +1,22 @@
+body {
+    background-image: url("https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png");
+    background-size: cover;
+    color: #fafafa;
+}
+
+
+.login {
+    font-family: sans-serif;
+
+    margin: 20rem;
+    margin-left: 50rem;
+}
+
+.submit input{
+    color: #fafafa;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+     border-radius: 20px;
+     border: indianred;
+     background-color: indianred;
+}

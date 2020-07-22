@@ -1,0 +1,86 @@
+body {
+    font-family: sans-serif;
+    background-image: url("https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png");
+    background-size: cover;
+    background-size: cover;
+    color: whitesmoke;
+}
+
+a {
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.avatar {
+    background-color: #d7a8ed;
+}
+
+.edit {
+    display: block;
+    height: 40px;
+    margin-left: 87rem;
+    opacity: 1;
+    font-size: 200%;
+    border-radius: 40px;
+    padding: 20px;
+    color: #fafafa;
+    /* margin: 16rem; */
+    background: #e85d04;
+    text-decoration: none;
+}
+
+.create {
+    text-decoration: none;
+    color: whitesmoke;
+    padding: 20px;
+    font-size: 1.2rem;
+    text-align: center;
+    display: block;
+    background-color: #d7a8ed;
+}
+
+.header {
+    margin: 20px;
+    display: flex;
+}
+
+.username {
+    margin-left: 20px;
+}
+
+.postWall {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    grid-area: postsArea;
+    flex-direction: column-reverse;
+}
+
+.post {
+    margin: 20px;
+    margin-right: 100px;
+    padding: 20px;
+    width: 600px;
+    word-break: break-all;
+    background-color: #d7a8ed;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 0.8fr 1.4fr 0.8fr;
+    grid-template-rows: 0.02fr 1.8fr;
+    gap: 1px 1px;
+    grid-template-areas: ". titleArea ." ". postsArea .";
+}
+
+.title {
+    margin-top: 5px;
+    display: block;
+    grid-area: titleArea;
+    text-align: center;
+}

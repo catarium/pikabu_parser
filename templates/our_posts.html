@@ -1,0 +1,33 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/our_posts.css') }}?v1">
+    
+    <title>Our posts</title>
+</head>
+<body>
+    <div class="grid-container">
+        <h1 class="title">Наши посты</h1>
+        <div class="postWall">
+            {% for j in range(posts_len) %}
+            <div class="post">
+                <div class="post_header">
+                    <a href="{{ url_for('post', postid=ids[j])}}">{{ids[j]}}</a>
+                    <a class="user" href="{{ url_for('user_profile', username=users[j])}}">{{users[j]}}</a>
+                </div>
+                {% if posts[j]|length > 301 %}
+                <p>{{posts[j][0:300]}}<br>	• 	• 	•</p>
+                {% else %}
+                <p>{{ posts[j] }}</p>
+                {% endif %}
+                {% if images[j] != ' ' %}
+                <img src="{{ url_for('static', filename='images/' + images[j]) }}">
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
