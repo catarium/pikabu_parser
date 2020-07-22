@@ -19,7 +19,7 @@ app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdTCbQZAAAAAHx_AZL_TND4HDGMPzdtn5_vNPTj'
 
 con = psycopg2.connect(host='localhost', user='postgres', password='MY_parol', dbname='posts')
 con.set_session(autocommit=True)
-app.config.from_object(Config)pi
+app.config.from_object(Config)
 cur = con.cursor()
 
 
