@@ -1,12 +1,14 @@
 body {
     font-family: sans-serif;
     background-image: url("https://i.pinimg.com/originals/5a/c1/29/5ac1296b709f4427d4c7785a322d78a2.png");
-    background-size: cover;
     color: #fafafa;
-    min-height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
+    max-height: 100vh;
+    max-width:
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 header {
@@ -67,7 +69,6 @@ a:hover {
 
 @media screen and (max-width: 634px){
     .a{
-        margin: 20px;
         flex-direction: column;
         justify-content: space-around;
     }

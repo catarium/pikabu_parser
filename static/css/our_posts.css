@@ -19,13 +19,14 @@ a:hover {
 }
 
 .avatar {
+    width: 200px;
+    min-width: 100px;
     background-color: #d7a8ed;
 }
 
 .edit {
     display: block;
     height: 40px;
-    margin-left: 87rem;
     opacity: 1;
     font-size: 200%;
     border-radius: 40px;
@@ -47,6 +48,7 @@ a:hover {
 }
 
 .header {
+    justify-content: space-between;
     margin: 20px;
     display: flex;
 }
@@ -65,10 +67,8 @@ a:hover {
 }
 
 .post {
-    margin: 20px;
-    margin-right: 100px;
     padding: 20px;
-    width: 600px;
+    width: 80vw;
     word-break: break-all;
     background-color: #d7a8ed;
 }
