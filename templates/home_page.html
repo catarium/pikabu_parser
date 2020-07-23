@@ -9,7 +9,6 @@
 </head>
 <body>
     <header>
-        {% if 'user' in session %}
         <nav class="navbar navbar-expand-lg navbar-dark bg-#d7a8ed">
           <a class="navbar-brand" href="#">BestPost</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,21 +16,24 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
-              <li class="nav-item active">
-                <a class="nav-link" href="{{url_for('logout')}}">Выйти<span class="sr-only">(current)</span></a>
-              </li>
-              <li class="nav-item active">
-                <a class="nav-link" href="{{url_for('user_profile', username=session['user'])}}">Профиль</a>
-              </li>
+              {% if 'user' in session %}
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('logout')}}">Выйти<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('user_profile', username=session['user'])}}">Профиль</a>
+                  </li>
+               {% else %}
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('register')}}">Выйти<span class="sr-only">(current)</span></a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('login')}}">Профиль</a>
+                  </li>
+                {% endif %}
             </ul>
           </div>
         </nav>
-        {% else %}
-        <div class="btns">
-            <a href="{{url_for('register')}}" class="log-reg-btn" >Регистрация</a>
-            <a href="{{url_for('login')}}" class="log-reg-btn">Вход</a>
-        </div>
-        {% endif %}
     </header>
     <main>
         <div class="a">
