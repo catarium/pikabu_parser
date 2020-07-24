@@ -15,7 +15,7 @@
                 
                 <h1>Создать пост</h1>
                 
-                <form action="" method="POST">
+                <form action="" method="POST" enctype="multipart/form-data" novalidate>
                     <div class="form-group">
                         <label for="title">Заголовок<span class="require"></span></label>
                         <input type="text" class="form-control" name="post-name" />
@@ -29,9 +29,9 @@
                         <button type="submit" class="btn btn-primary">
                             Запостить
                         </button>
-                        <input class="upload" type='file' name='file'>
+                        
                     </div>
-                    
+                    <input class="upload" type='file' name='file'>
                 </form>
             </div>
             
