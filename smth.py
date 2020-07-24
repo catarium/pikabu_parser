@@ -110,7 +110,7 @@ def login():
 @app.route('/reg', methods=['GET', 'POST'])
 def register():
     form = RegForm()
-    if request.method == "POST" and form.validate_on_submit():
+    if request.method == "POST":
         user = request.form['username']
         passw = request.form['password']
         email = request.form['email']
@@ -141,7 +141,7 @@ def register():
             else:
                 return render_template('registration.html', title='Sign In', form=form)
         except email_validator.EmailSyntaxError:
-            return render_template('registration.html')
+            return redirect(url_for('registration.html', title='Sign In', form=form))
     else:
         return render_template('registration.html', title='Sign In', form=form)
 

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>login</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}?v1">
 </head>
 <body>
@@ -14,13 +15,13 @@
                     <div id="login-column" class="col-md-6">
                         <div id="login-box" class="col-md-12">
                             <form id="login-form" class="form" action="" method="post">
-                                <h3 class="text-center text-info">Edit</h3>
+                                <h3 class="text-center text-info">Verification</h3>
                                 <div class="form-group">
                                     <label for="username" class="text-info">Введите ключ верификации:</label><br>
                                     <input type="text" name="ver" id="username" class="form-control">
                                 </div>
-                                <div id="register-link" class="text-right">
-                                    <a href="{{ url_for('register') }}" class="text-info">Register here</a>
+                                <div class="form-group">
+                                    <input type="submit" name="submit" class="btn btn-info btn-md" value="submit">
                                 </div>
                             </form>
                         </div>
