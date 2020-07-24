@@ -2,42 +2,50 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>login</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}?v1">
+    <title>Sign up</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/registration.css') }}?v1">
 </head>
 <body>
-<div class="login">
-    {% block content %}
-    <h1>Reg In</h1>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.username.label }}<br>
-            {{ form.username(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
-            {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.email.label }}<br>
-            {{ form.email(size=32) }}
-            {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.recaptcha }}
-        </p>
-            <p><input id="submit" name="submit" type="submit" value="Reg In"></p>
-    </form>
-{% endblock %}
+    <div class="container">
+    <div id="login">
+        <div class="container">
+            <div id="login-row" class="row justify-content-center align-items-center">
+                <div id="login-column" class="col-md-6">
+                    <div id="login-box" class="col-md-12">
+                        <form id="login-form" class="form" action="" method="post">
+                            <h3 class="text-center text-info">Sign up</h3>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Имя пользователя:</label><br>
+                                <input id="username" name="username" required size="32" type="text" value="" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="text-info">Пароль:</label><br>
+                                <input id="password" name="password" required size="32" type="password" value=" class="form-control>
+                            </div>
+                            <div class="form-group">
+                                <label for="username" class="text-info">Электронная почта:</label><br>
+                                <input id="email" name="email" required size="32" type="text" value="" class="form-control">
+                            </div>
+                            {{ form.recaptcha }}
+                            <div class="form-group">
+                                <input type="submit" name="submit" id="submit" class="btn btn-info btn-md" value="submit">
+                            </div>
+
+                            <div id="register-link" class="text-right">
+                                <a href="{{ url_for('login') }}" class="text-info">Вход</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
 </div>
 </body>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </html>

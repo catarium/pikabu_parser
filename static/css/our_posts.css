@@ -67,6 +67,7 @@ a:hover {
 }
 
 .post {
+    margin: 20px;
     padding: 20px;
     width: 80vw;
     word-break: break-all;

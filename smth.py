@@ -17,10 +17,11 @@ app = Flask(__name__, template_folder='templates')
 app.config['RECAPTCHA_PUBLIC_KEY'] = '6LdTCbQZAAAAAOSVAPFO_ZfzX9i0qTS4Iub8R3Ru'
 app.config['RECAPTCHA_PRIVATE_KEY'] = '6LdTCbQZAAAAAHx_AZL_TND4HDGMPzdtn5_vNPTj'
 
-con = psycopg2.connect(host='ec2-54-217-213-79.eu-west-1.compute.amazonaws.com',
-                       user='ttpkdgjdnewrkb',
-                       password='a786345bbea0adbfbe50e4b618a3350ecd1ac8028bd00e34d560e471a7bf5ccb',
-                       dbname='ddq86s0s5prr5k')
+# con = psycopg2.connect(host='ec2-54-217-213-79.eu-west-1.compute.amazonaws.com',
+#                        user='ttpkdgjdnewrkb',
+#                        password='a786345bbea0adbfbe50e4b618a3350ecd1ac8028bd00e34d560e471a7bf5ccb',
+#                        dbname='ddq86s0s5prr5k')
+con = psycopg2.connect(host='localhost', user='postgres', password='MY_parol', dbname='posts')
 con.set_session(autocommit=True)
 app.config.from_object(Config)
 cur = con.cursor()
@@ -110,9 +111,9 @@ def login():
 def register():
     form = RegForm()
     if request.method == "POST" and form.validate_on_submit():
-        user = form.username.data
-        passw = form.password.data
-        email = form.email.data
+        user = request.form['username']
+        passw = request.form['password']
+        email = request.form['email']
         print(user, passw, email)
         try:
 
@@ -171,8 +172,7 @@ def create_post():
             post_name = request.form['post-name']
             file = request.files['file']
         except KeyError:
-            print('key error')
-            file = 'default_avatar.jpg'
+            file = None
         print(request.files)
         if file and allowed_file(file.filename) and post_name:
             cur.execute('SELECT id FROM users ORDER BY id DESC LIMIT 1')

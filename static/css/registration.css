@@ -35,4 +35,10 @@ body {
     background-color: #9b41a3!important;
 }
 
-
+#login .container #login-row #login-column #login-box {
+  margin-top: 120px;
+  max-width: 600px;
+  height: 490px;
+  border: 1px solid #9C9C9C;
+  background-color: #d7a8ed;
+}
