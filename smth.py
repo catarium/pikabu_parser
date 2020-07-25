@@ -141,7 +141,7 @@ def register():
             else:
                 return render_template('registration.html', title='Sign In', form=form)
         except email_validator.EmailSyntaxError:
-            return redirect(url_for('registration.html', title='Sign In', form=form))
+            return redirect(url_for('register', title='Sign In', form=form))
     else:
         return render_template('registration.html', title='Sign In', form=form)
 
