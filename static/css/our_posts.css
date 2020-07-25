@@ -101,3 +101,12 @@ a:hover {
 .post-name {
     font-size: 20px;
 }
+
+@media screen and (max-width: 634px){
+    .header{
+        display: block;
+    }
+    .edit {
+        text-align: center;
+    }
+}
