@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/our_posts.css') }}?v1">
 </head>
 <body>
@@ -38,6 +39,9 @@
                 <p>{{posts[j]}}</p>
                 {% if images[j] != ' ' %}
                 <img class="post-image" src="{{ url_for('static', filename='images/' + images[j]) }}">
+                {% endif %}
+                {% if session['user'] == user %}
+                <a href="{{ url_for('delete_post', postid=ids[j]) }}">Удалить</a>
                 {% endif %}
             </div>
             {% endfor %}

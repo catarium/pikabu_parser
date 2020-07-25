@@ -186,7 +186,7 @@ def create_post():
             command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
             cur.execute(command, (post_name, text, session['user'], ' '))
             con.commit()
-        return redirect(url_for('home'))
+        return redirect(url_for('user_profile', username=session['user']))
     else:
         if 'user' in session:
             return render_template('create_post.html')
@@ -206,8 +206,8 @@ def our_posts():
         post_names = [i[2] for i in data]
         print(posts)
         print(users)
-        return render_template('our_posts.html', posts=posts, posts_len=len(posts),
-                               users=users, images=images, ids=ids, post_names=post_names)
+        return render_template('our_posts.html', posts=posts, posts_len=len(posts), users=users,
+                               images=images, ids=ids, post_names=post_names, session=session)
     else:
         return redirect(url_for('login'))
 
@@ -354,18 +354,34 @@ def post(postid):
             postid = str(postid)
             cur.execute('SELECT post, username, image, postname, id FROM posts WHERE id = %s', (postid,))
             data = cur.fetchall()[0]
-            post, user, image, postname, id_ = data
-            cur.execute('SELECT username, comment_name, comment FROM comments WHERE postid = %s', (postid,))
-            data = cur.fetchall()
-            comm_users = [i[0] for i in data]
-            comment_name = [i[1] for i in data]
-            comments = [i[2] for i in data]
-            return render_template('post.html', post=post, user=user, image=image,
-                                   comm_users=comm_users, comments=comments,
-                                   coms_lenth=len(comments), comment_name=comment_name,
-                                   postname=postname, id=id_)
+            if data:
+                post, user, image, postname, id_ = data
+                cur.execute('SELECT username, comment_name, comment FROM comments WHERE postid = %s', (postid,))
+                data = cur.fetchall()
+                comm_users = [i[0] for i in data]
+                comment_name = [i[1] for i in data]
+                comments = [i[2] for i in data]
+                return render_template('post.html', post=post, user=user, image=image,
+                                       comm_users=comm_users, comments=comments,
+                                       coms_lenth=len(comments), comment_name=comment_name,
+                                       postname=postname, id=id_)
+            return '<h1>Такого поста не существует</h1>'
         return redirect((url_for('login')))
 
 
+@app.route('/delete/post/<postid>')
+def delete_post(postid):
+    cur.execute('SELECT post, username, image, postname, id FROM posts WHERE id = %s', (postid,))
+    data = cur.fetchall()[0]
+    if data:
+        if data[1] == session['user']:
+            cur.execute('DELETE FROM posts WHERE id = %s', (postid,))
+            cur.execute('DELETE FROM comments WHERE postid = %s', (postid,))
+            url = request.headers.get("Referer")
+            if url:
+                return redirect(url)
+    return redirect(url_for('home'))
+
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
