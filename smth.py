@@ -78,7 +78,7 @@ def login():
     if request.method == 'POST':
         user = request.form['username']
         passw = request.form['password']
-        if user != '' and passw != '':
+        if user and passw:
             cur.execute('SELECT username FROM users')
             users_list = cur.fetchall()
             users_list = [i[0] for i in users_list]
@@ -117,29 +117,30 @@ def register():
         print(user, passw, email)
         try:
 
-            if user != '' and passw != '' and email_validator.validate_email(email) and \
+            if user and passw and email and \
                     len(user) <= 30 and len(email) <= 30:
-                cur.execute("SELECT * FROM users WHERE username = %s", (user,))
-                if cur.fetchall() == []:
-                    code = ''.join(sample(['1', '2', '3', '4', '5', '6', '7', '8', '9'], 6))
-                    cur.execute('''INSERT INTO users (username, password, email, verified, code, 
-                    avatar)
-                    VALUES (
-                    %s,
-                    %s,
-                    %s,
-                    False,
-                    %s,
-                    %s
-                    );''', (
-                    user, generate_password_hash(passw), email, code, 'default_avatar.jpg'))
-                    con.commit()
-                    session['user-to-ver'] = user
-                    send_message(email, code)
-                    return redirect(url_for('verification'))
-                return render_template('registration.html')
-            else:
-                return render_template('registration.html', title='Sign In', form=form)
+                if email_validator.validate_email(email):
+                    cur.execute("SELECT * FROM users WHERE username = %s", (user,))
+                    if cur.fetchall() == []:
+                        code = ''.join(sample(['1', '2', '3', '4', '5', '6', '7', '8', '9'], 6))
+                        cur.execute('''INSERT INTO users (username, password, email, verified, code, 
+                        avatar)
+                        VALUES (
+                        %s,
+                        %s,
+                        %s,
+                        False,
+                        %s,
+                        %s
+                        );''', (
+                        user, generate_password_hash(passw), email, code, 'default_avatar.jpg'))
+                        con.commit()
+                        session['user-to-ver'] = user
+                        send_message(email, code)
+                        return redirect(url_for('verification'))
+                    return render_template('registration.html', title='Sign In', form=form)
+                else:
+                    return render_template('registration.html', title='Sign In', form=form)
         except email_validator.EmailSyntaxError:
             return redirect(url_for('register', title='Sign In', form=form))
     else:
@@ -167,26 +168,26 @@ def allowed_file(filename):
 @app.route('/create-post',  methods=['GET', 'POST'])
 def create_post():
     if request.method == "POST":
-        try:
-            text = request.form['post']
-            post_name = request.form['post-name']
-            file = request.files['file']
-        except KeyError:
-            file = None
+        text = request.form['post']
+        post_name = request.form['post-name']
+        file = request.files['file']
         print(request.files)
-        if file and allowed_file(file.filename) and post_name:
-            cur.execute('SELECT id FROM users ORDER BY id DESC LIMIT 1')
-            filename = str(cur.fetchall()[0][0]) + secure_filename(file.filename)
-            print(filename)
-            file.save(os.path.join(UPLOAD_FOLDER, filename))
-            command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
-            cur.execute(command, (post_name, text, session['user'], filename))
-            con.commit()
+        if post_name and text and len(post_name) <= 20 and len(text) <= 600:
+            if allowed_file(file.filename):
+                    cur.execute('SELECT id FROM users ORDER BY id DESC LIMIT 1')
+                    filename = str(cur.fetchall()[0][0]) + secure_filename(file.filename)
+                    print(filename)
+                    file.save(os.path.join(UPLOAD_FOLDER, filename))
+                    command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
+                    cur.execute(command, (post_name, text, session['user'], filename))
+                    con.commit()
+            else:
+                command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
+                cur.execute(command, (post_name, text, session['user'], ' '))
+                con.commit()
+            return redirect(url_for('user_profile', username=session['user']))
         else:
-            command = "INSERT INTO posts (postname, post, username, image) VALUES(%s, %s, %s, %s);"
-            cur.execute(command, (post_name, text, session['user'], ' '))
-            con.commit()
-        return redirect(url_for('user_profile', username=session['user']))
+            return redirect(url_for('create_post'))
     else:
         if 'user' in session:
             return render_template('create_post.html')
@@ -275,51 +276,54 @@ def edit_profile(username):
             cur.execute("SELECT * FROM users WHERE username = %s", (user,))
             try:
                 print((session['user'] == user))
-                if user and passw and email_validator.validate_email(email) and \
+                if user and passw and email and \
                         (cur.fetchall() == [] or session['user'] == user) and \
                         len(user) <= 30 and len(email) <= 30:
                     code = ''.join(sample(['1', '2', '3', '4', '5', '6', '7', '8', '9'], 6))
-                    if file and allowed_file(file.filename):
-                        filename = 'username-' + secure_filename(file.filename)
-                        print(filename)
-                        file.save(os.path.join(UPLOAD_FOLDER, filename))
-                        cur.execute('''UPDATE users
-                                        SET username = %s,
-                                        password = %s,
-                                        email = %s,
-                                        avatar = %s,
-                                        code = %s,
-                                        verified = false
-                                        WHERE username = %s;
-                                        ''', (user, generate_password_hash(passw), email,
-                                              filename, code, username,))
+                    if email_validator.validate_email(email):
+                        if file and allowed_file(file.filename):
+                            filename = 'username-' + secure_filename(file.filename)
+                            print(filename)
+                            file.save(os.path.join(UPLOAD_FOLDER, filename))
+                            cur.execute('''UPDATE users
+                                            SET username = %s,
+                                            password = %s,
+                                            email = %s,
+                                            avatar = %s,
+                                            code = %s,
+                                            verified = false
+                                            WHERE username = %s;
+                                            ''', (user, generate_password_hash(passw), email,
+                                                  filename, code, username,))
+                        else:
+                            cur.execute('''UPDATE users
+                                            SET username = %s,
+                                            password = %s,
+                                            email = %s,
+                                            avatar = %s,
+                                            code = %s,
+                                            verified = false
+                                            WHERE username = %s;
+                                            ''', (user, generate_password_hash(passw), email, code,
+                                                  username,))
+                        con.commit()
+                        print(email, old_email)
+                        if email == old_email:
+                            print('A')
+                            cur.execute('''UPDATE users
+                                            SET verified = true
+                                            WHERE username = %s;
+                                            ''', (user,))
+                            session['user'] = user
+                            return redirect(url_for('home'))
+                        else:
+                            print('B')
+                            session.pop('user-to-ver', None)
+                            session['user-to-ver'] = user
+                            send_message(email, code)
+                            return redirect(url_for('verification'))
                     else:
-                        cur.execute('''UPDATE users
-                                        SET username = %s,
-                                        password = %s,
-                                        email = %s,
-                                        avatar = %s,
-                                        code = %s,
-                                        verified = false
-                                        WHERE username = %s;
-                                        ''', (user, generate_password_hash(passw), email, code,
-                                              username,))
-                    con.commit()
-                    print(email, old_email)
-                    if email == old_email:
-                        print('A')
-                        cur.execute('''UPDATE users
-                                        SET verified = true
-                                        WHERE username = %s;
-                                        ''', (user,))
-                        session['user'] = user
-                        return redirect(url_for('home'))
-                    else:
-                        print('B')
-                        session.pop('user-to-ver', None)
-                        session['user-to-ver'] = user
-                        send_message(email, code)
-                        return redirect(url_for('verification'))
+                        return redirect(url_for('edit_profile', username=username))
                 else:
                     return redirect(url_for('edit_profile', username=username))
             except email_validator.EmailSyntaxError:

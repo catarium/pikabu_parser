@@ -7,6 +7,7 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
+    text-overflow: hidden!important;
 }
 
 a {
@@ -67,6 +68,7 @@ a:hover {
 }
 
 .post {
+    text-overflow: clip!important;
     margin: 20px;
     padding: 20px;
     width: 80vw;
