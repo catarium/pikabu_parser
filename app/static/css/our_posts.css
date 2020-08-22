@@ -36,6 +36,7 @@ a:hover {
     /* margin: 16rem; */
     background: #e85d04;
     text-decoration: none;
+    margin-top: 20px;
 }
 
 .create {
@@ -55,6 +56,8 @@ a:hover {
 }
 
 .username {
+    font-size: 50px;
+    font-weight: bold;
     margin-left: 20px;
 }
 
@@ -68,6 +71,8 @@ a:hover {
 }
 
 .post {
+    display: flex;
+    flex-direction: column;
     text-overflow: clip!important;
     margin: 20px;
     padding: 20px;
@@ -102,6 +107,28 @@ a:hover {
 
 .post-name {
     font-size: 20px;
+}
+
+.post-footer {
+    display: flex;
+    margin-top: 20px;
+}
+
+.user-left {
+    display: flex;
+}
+
+.user-info {
+    padding: 20px;
+    background-color: #d7a8ed;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.elem {
+    padding-left: 1vw;
+    padding-right: 1vw
 }
 
 @media screen and (max-width: 634px){
