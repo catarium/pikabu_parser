@@ -7,7 +7,6 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     min-height: 100vh;
-    text-overflow: hidden!important;
 }
 
 a {
@@ -71,9 +70,12 @@ a:hover {
 }
 
 .post {
+<<<<<<< HEAD:app/static/css/our_posts.css
     display: flex;
     flex-direction: column;
     text-overflow: clip!important;
+=======
+>>>>>>> parent of 204744b... bug_fix:static/css/our_posts.css
     margin: 20px;
     padding: 20px;
     width: 80vw;
