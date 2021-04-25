@@ -12,16 +12,16 @@
         {% if avatar %}
         <div class="user-left">
             <img class="avatar" src="{{ url_for('static', filename='images/' + avatar) }}">
-                <div class="username">{{ user }}</div>
+                <div class="username">{{ user.username }}</div>
         </div>
         <div>
-            {% if 'user' in session and session['user'] == user %}
-            <a class="edit" href="{{url_for('edit_profile', username=user)}}">Настроить</a>
+            {% if 'user-id' in session and session['user-id'] == user.id %}
+            <a class="edit" href="{{url_for('edit_profile', id=user.id)}}">Настроить</a>
             {% else %}
                 {% if session['user'] in subs %}
-                <a class="edit" href="{{url_for('unsubscribe', username=user)}}">Отписаться</a>
+                <a class="edit" href="{{url_for('unsubscribe', id=user.id)}}">Отписаться</a>
                 {% else %}
-                <a class="edit" href="{{url_for('subscribe', username=user)}}">Подписаться</a>
+                <a class="edit" href="{{url_for('subscribe', id=user.id)}}">Подписаться</a>
                 {%endif%}
             {% endif %}
         </div>
@@ -32,7 +32,7 @@
         <a class="elem" href="#">Посты: {{ posts_len }}</a>
         <a class="elem" href="#">Подписки: {{ s2_len }}</a>
     </div>
-    {% if 'user' in session and session['user'] == user %}
+    {% if 'user-id' in session and session['user-id'] == user.id %}
         <a class="create" href="{{url_for('create_post')}}">Создать пост</a>
     {% endif %}
 
@@ -40,19 +40,23 @@
 </header>
 
 <div class="grid-container">
-        <h2 class="title">{{ 'Посты ' + user }}</h2>
+        <h2 class="title">{{ 'Посты ' + user.username }}</h2>
         <div class="postWall">
             {% for j in range(posts_len) %}
             <div class="post">
                 <div class="post_header">
                 <a class="post-name" href="{{ url_for('post', postid=ids[j])}}">{{post_names[j]}}</a>
                 </div>
-                <p>{{posts[j]}}</p>
+                {% if posts[j]|length > 301 %}
+                <p>{{posts[j][0:300]}}<br>	• 	• 	•</p>
+                {% else %}
+                <p>{{ posts[j] }}</p>
+                {% endif %}
                 {% if images[j] != ' ' %}
                 <img class="post-image" src="{{ url_for('static', filename='images/' + images[j]) }}">
                 {% endif %}
                 <div class="post-footer">
-                    {% if session['user'] == user %}
+                    {% if session['user-id'] == user.id %}
                     <a href="{{ url_for('delete_post', postid=ids[j]) }}">Удалить</a>
                     {% endif %}
                 </div>

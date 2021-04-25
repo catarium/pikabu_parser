@@ -1,16 +1,22 @@
-from app.__init__ import db
+import sqlalchemy
+from app.db_session import SqlAlchemyBase
+from flask_login import UserMixin
 from werkzeug.security import check_password_hash
+from sqlalchemy_serializer import SerializerMixin
+
 from send_mail import send_message
 
 
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(30), unique=True)
-    email = db.Column(db.String(100), unique=True)
-    password = db.Column(db.Text)
-    verified = db.Column(db.Boolean)
-    code = db.Column(db.String(10))
-    avatar = db.Column(db.Text)
+class Users(SqlAlchemyBase, SerializerMixin):
+    __tablename__ = 'users'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    username = sqlalchemy.Column(sqlalchemy.String(30), unique=True)
+    email = sqlalchemy.Column(sqlalchemy.String(100), unique=True)
+    password = sqlalchemy.Column(sqlalchemy.Text)
+    verified = sqlalchemy.Column(sqlalchemy.Boolean)
+    code = sqlalchemy.Column(sqlalchemy.String(10))
+    avatar = sqlalchemy.Column(sqlalchemy.Text)
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
@@ -30,12 +36,15 @@ class Users(db.Model):
                f'{self.code} {self.avatar}'
 
 
-class Posts(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text)
-    post = db.Column(db.Text)
-    image = db.Column(db.Text)
-    postname = db.Column(db.Text)
+class Posts(SqlAlchemyBase, SerializerMixin):
+    __tablename__ = 'posts'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    username = sqlalchemy.Column(sqlalchemy.Text)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer)
+    post = sqlalchemy.Column(sqlalchemy.Text)
+    image = sqlalchemy.Column(sqlalchemy.Text)
+    postname = sqlalchemy.Column(sqlalchemy.Text)
 
     def get_data(self):
         return [self.id, self.username, self.post, self.image, self.postname]
@@ -44,12 +53,15 @@ class Posts(db.Model):
         return f'{self.id} {self.username} {self.post} {self.image} {self.postname}'
 
 
-class Comments(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.Text)
-    comment_name = db.Column(db.Text)
-    comment = db.Column(db.Text)
-    postid = db.Column(db.Text)
+class Comments(SqlAlchemyBase, SerializerMixin):
+    __tablename__ = 'comments'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    username = sqlalchemy.Column(sqlalchemy.Text)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer)
+    comment_name = sqlalchemy.Column(sqlalchemy.Text)
+    comment = sqlalchemy.Column(sqlalchemy.Text)
+    postid = sqlalchemy.Column(sqlalchemy.Text)
 
     def get_data(self):
         return [self.id, self.username, self.comment_name, self.comment, self.postid]
@@ -58,10 +70,13 @@ class Comments(db.Model):
         return f'[{self.id}, {self.username}, {self.comment_name}, {self.comment}, {self.postid}]'
 
 
-class Subscribers(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    subscriber = db.Column(db.Text)
-    username = db.Column(db.Text)
+class Subscribers(SqlAlchemyBase, SerializerMixin):
+    __tablename__ = 'subscribers'
+
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    subscriber = sqlalchemy.Column(sqlalchemy.Text)
+    username = sqlalchemy.Column(sqlalchemy.Text)
+    user_id = sqlalchemy.Column(sqlalchemy.Integer)
 
     def get_data(self):
         return [self.id, self.subscriber, self.username]

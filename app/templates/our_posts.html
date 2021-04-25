@@ -15,7 +15,7 @@
             <div class="post">
                 <div class="post_header">
                     <a class="post-name" href="{{ url_for('post', postid=ids[j])}}">{{post_names[j]}}</a>
-                    <a class="user" href="{{ url_for('user_profile', username=users[j])}}">{{users[j]}}</a>
+                    <a class="user" href="{{ url_for('user_profile', id=users[j].id)}}">{{users[j].id}}</a>
                 </div>
 
                     <div class="post-content">
@@ -24,7 +24,7 @@
                         {% else %}
                         <p>{{ posts[j] }}</p>
                         {% endif %}
-                        {% if users[j] == session['user']%}
+                        {% if users[j].id == session['user-id']%}
                         <a href="{{ url_for('delete_post', postid=ids[j]) }}">Удалить</a>
                         {% endif %}
                     </div>
